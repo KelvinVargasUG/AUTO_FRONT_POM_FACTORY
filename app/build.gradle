@@ -1,6 +1,7 @@
 plugins {
     // Apply the application plugin to add support for building a CLI application in Java.
     id 'application'
+    id 'net.serenity-bdd.serenity-gradle-plugin' version '5.3.7'
 }
 
 repositories {
@@ -36,4 +37,9 @@ application {
 test {
     useJUnit()
     testLogging.showStandardStreams = true
+    systemProperties System.getProperties()
+    systemProperty "environment", "default"
+    finalizedBy aggregate
 }
+
+gradle.startParameter.continueOnFailure = true

@@ -8,6 +8,9 @@ Proyecto de automatización E2E del sistema **FoodTech Restaurant Management App
 - Gradle 8.5+
 - Google Chrome instalado
 - App FoodTech corriendo en `http://localhost:5173`
+- [FoodTech-Kitchen-Services](https://github.com/KelvinVargasUG/FoodTech-Kitchen-Services/tree/main)
+- [FoodTech-Front](https://github.com/KelvinVargasUG/FoodTech-Front/tree/main)
+- Ejecutar Script inicial [seed_data.sh](scripts/seed_data.sh)
 
 ## Ejecutar los tests
 
