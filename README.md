@@ -1,58 +1,51 @@
 # AUTO_FRONT_POM_FACTORY
 
-Proyecto de automatización E2E del sistema **FoodTech Restaurant Management App** usando **Serenity BDD + Cucumber + Selenium** con el patrón **Page Object Model (POM)** y **Page Factory** (`@FindBy`).
+## Descripción
 
-## Requisitos previos
+Proyecto de automatización de pruebas end-to-end sobre la interfaz web de **FoodTech** utilizando el patrón **Page Object Model (POM)** con **Page Factory**. Valida los flujos operativos del restaurante (autenticación, toma de pedidos, gestión de catálogo y carga masiva) interactuando directamente con el navegador.
 
-- Java 17+
-- Gradle 8.5+
-- Google Chrome instalado
-- App FoodTech corriendo en `http://localhost:5173`
-- [FoodTech-Kitchen-Services](https://github.com/KelvinVargasUG/FoodTech-Kitchen-Services/tree/main)
-- [FoodTech-Front](https://github.com/KelvinVargasUG/FoodTech-Front/tree/main)
-- Ejecutar Script inicial [seed_data.sh](scripts/seed_data.sh)
+## Enfoque de prueba
 
-## Ejecutar los tests
-
-```bash
-./gradlew clean test -Dwebdriver.base.url="http://localhost:5173"
-```
+El patrón **POM con Page Factory** encapsula los elementos de cada página en clases dedicadas, separando la localización de elementos de la lógica de prueba. Esto facilita el mantenimiento cuando cambia la interfaz, ya que los cambios se aíslan en una sola clase por página.
 
 ## Escenarios cubiertos
 
-| Escenario | Feature | Tipo |
-|-----------|---------|------|
-| Login con credenciales válidas | login.feature | Positivo |
-| Login con credenciales inválidas | login.feature | Negativo |
-| Mesero agrega orden a mesa | mesa.feature | Positivo |
+| Feature | Escenarios | Tipo |
+|---|---|---|
+| **Login** | Inicio de sesión exitoso; Inicio de sesión con credenciales inválidas | Positivo / Negativo |
+| **Mesa (Pedido del mesero)** | Mesero agrega orden a mesa | Positivo |
+| **Catálogo de productos (Admin)** | Crear producto; Visualizar catálogo; Editar producto; Desactivar producto; Validación nombre vacío al crear y editar; Producto desactivado no visible en catálogo público | Positivo / Negativo |
+| **Carga masiva de productos** | Pantalla de carga; Carga exitosa CSV; Rechazo por cabeceras incorrectas; Rechazo por tamaño excedido; Descarga de reporte de errores; Productos cargados visibles en catálogo | Positivo / Negativo |
 
-## Estructura del proyecto
+**Total: 16 escenarios**
 
+## Diferencia con AUTO_FRONT_SCREENPLAY
+
+Ambos proyectos prueban la misma aplicación web pero con patrones de diseño diferentes. Este proyecto usa **POM/Page Factory** (orientado a páginas), mientras que AUTO_FRONT_SCREENPLAY usa **Screenplay** (orientado a actores). Además, este proyecto cubre los flujos de **login y toma de pedidos en mesa**, mientras que el otro cubre **registro de usuarios y facturación**.
+
+## Requisitos previos
+
+- Java 17 o superior
+- Google Chrome instalado
+- FoodTech-Kitchen-Services corriendo en `http://localhost:8080`
+- FoodTech-Front corriendo en `http://localhost:5173`
+- Ejecutar el script de datos iniciales: [seed_data.sh](scripts/seed_data.sh)
+
+## Comandos disponibles
+
+```bash
+./gradlew clean test                                          # Ejecutar todos los tests
+./gradlew clean test -Dwebdriver.base.url="http://localhost:5173"  # Especificar URL base
 ```
-app/src/test/java/com/automation/
-├── pages/               # Page Objects con @FindBy (Page Factory)
-│   ├── LoginPage.java
-│   └── WaiterViewPage.java
-├── steps/               # Actores @Steps (lógica de prueba)
-│   ├── LoginSteps.java
-│   └── WaiterSteps.java
-├── stepdefinitions/     # Glue Cucumber (sin lógica UI)
-│   ├── LoginStepDefinitions.java
-│   └── WaiterStepDefinitions.java
-└── runner/
-    └── CucumberTestRunner.java
 
-app/src/test/resources/
-├── features/
-│   ├── login.feature
-│   └── mesa.feature
-└── serenity.conf        # Configuración del driver
-```
+## Reportes
 
-## Reportes Serenity
-
-Luego de ejecutar los tests, el reporte HTML está disponible en:
+Los reportes de Serenity se generan en:
 
 ```
 app/target/site/serenity/index.html
 ```
+
+---
+
+Proyecto académico — Sofka Technologies — 2026
